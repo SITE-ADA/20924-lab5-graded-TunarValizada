@@ -125,8 +125,8 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event updateEventPrice(UUID id, BigDecimal newPrice) {
-        if (newPrice == null) {
-            throw new RuntimeException("Price cannot be null");
+        if (newPrice == null || newPrice.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Price cannot be null or negative");
         }
 
         Event existingEvent = eventRepository.findById(id)
